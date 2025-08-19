@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Wycen Sprzętu - REKORD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1976D2',
+                        secondary: '#FF6F00',
+                        success: '#4CAF50',
+                        warning: '#FF9800',
+                        error: '#F44336',
+                        neutral: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        'roboto': ['Roboto', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-gray-50 font-roboto">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-blue-600">
+        <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
+            <div class="text-center mb-8">
+                <div class="bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-tools text-2xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">REKORD</h1>
+                <p class="text-gray-600">System Wycen Sprzętu</p>
+            </div>
+            
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Login</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Wprowadź login">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Hasło</label>
+                    <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Wprowadź hasło">
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                        <label class="ml-2 block text-sm text-gray-700">Zapamiętaj mnie</label>
+                    </div>
+                    <a href="#" class="text-primary hover:text-blue-800 text-sm">Zapomniałeś hasła?</a>
+                </div>
+                
+                <button type="button" onclick="showDashboard()" class="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-200">
+                    Zaloguj się
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="mainDashboard" class="hidden">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <div class="bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-800">REKORD</h1>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="text-gray-600 hover:text-primary">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <div class="relative">
+                            <button class="flex items-center text-gray-700 hover:text-primary">
+                                <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span class="text-sm font-medium">Jan Kowalski</span>
+                                <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Tab Navigation -->
+            <div class="border-b border-gray-200 mb-8">
+                <nav class="-mb-px flex space-x-8">
+                    <button onclick="showTab('dashboard')" id="dashboardTab" class="tab-button active py-2 px-1 border-b-2 border-primary text-primary font-medium text-sm">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                    </button>
+                    <button onclick="showTab('equipment')" id="equipmentTab" class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                        <i class="fas fa-tools mr-2"></i>Sprzęt
+                    </button>
+                    <button onclick="showTab('quotes')" id="quotesTab" class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                        <i class="fas fa-file-invoice mr-2"></i>Wyceny
+                    </button>
+                    <button onclick="showTab('create-quote')" id="createQuoteTab" class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                        <i class="fas fa-plus mr-2"></i>Nowa Wycena
+                    </button>
+                    <button onclick="showTab('admin')" id="adminTab" class="tab-button py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                        <i class="fas fa-cog mr-2"></i>Admin
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboardContent" class="tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="bg-primary text-white w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-invoice text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Wyceny w tym miesiącu</p>
+                                <p class="text-2xl font-bold text-gray-900">47</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="bg-success text-white w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-tools text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Dostępny sprzęt</p>
+                                <p class="text-2xl font-bold text-gray-900">1,247</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="bg-warning text-white w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Sprzęt w serwisie</p>
+                                <p class="text-2xl font-bold text-gray-900">23</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <div class="flex items-center">
+                            <div class="bg-secondary text-white w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Przychód miesiąc</p>
+                                <p class="text-2xl font-bold text-gray-900">127,450 zł</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Quotes -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Ostatnie wyceny</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nr wyceny</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klient</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wartość</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WYC-2024-001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Budowa Express Sp. z o.o.</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15.01.2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12,450 zł</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-success text-white rounded-full">Zatwierdzona</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WYC-2024-002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mega Konstrukcje</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">16.01.2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">8,750 zł</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-warning text-white rounded-full">Oczekująca</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WYC-2024-003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Stal-Bud</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">17.01.2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">22,100 zł</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-gray-500 text-white rounded-full">Wersja robocza</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment Tab -->
+            <div id="equipmentContent" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Katalog Sprzętu</h2>
+                    <div class="flex space-x-4">
+                        <div class="relative">
+                            <input type="text" placeholder="Szukaj sprzętu..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+                        </div>
+                        <select class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option>Wszystkie kategorie</option>
+                            <option>Klimatyzacje</option>
+                            <option>Nagrzewnice</option>
+                            <option>Maszty</option>
+                            <option>Agregaty</option>
+                            <option>Kurtyny powietrzne</option>
+                            <option>Wyciągi spalin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Equipment Categories -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Klimatyzacje -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Klimatyzacje</h3>
+                            <div class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">706 szt.</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Carrier 50FC-093</p>
+                                    <p class="text-sm text-gray-600">90.18 kW</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">330 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Lennox BAH 085</p>
+                                    <p class="text-sm text-gray-600">85 kW</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">112 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Lennox CAMH</p>
+                                    <p class="text-sm text-gray-600">24-56 kW</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">102 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nagrzewnice -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Nagrzewnice</h3>
+                            <div class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">651 szt.</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Master BV691S</p>
+                                    <p class="text-sm text-gray-600">Olejowa</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">189 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Thermobile IMA 200</p>
+                                    <p class="text-sm text-gray-600">200 kW</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">250 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Jumbo 235</p>
+                                    <p class="text-sm text-gray-600">235 kW</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">142 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maszty -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Maszty</h3>
+                            <div class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">459 szt.</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Atlas Copco H5+</p>
+                                    <p class="text-sm text-gray-600">Automat</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">177 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Atlas Copco H6+</p>
+                                    <p class="text-sm text-gray-600">Duży</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">119 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Generac V20</p>
+                                    <p class="text-sm text-gray-600">Mobilny</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">62 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agregaty -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Agregaty</h3>
+                            <div class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">591 szt.</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">SDMO</p>
+                                    <p class="text-sm text-gray-600">Różne moce</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">487 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">INMESOL</p>
+                                    <p class="text-sm text-gray-600">115-440 kVA</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">71 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">GRUPEL</p>
+                                    <p class="text-sm text-gray-600">65-347 kVA</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">19 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kurtyny powietrzne -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Kurtyny powietrzne</h3>
+                            <div class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm">86 szt.</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Guard 150E</p>
+                                    <p class="text-sm text-gray-600">Elektryczna</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">86 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wyciągi spalin -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Wyciągi spalin</h3>
+                            <div class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-sm">106 szt.</div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900">Norfi SG-4996-200B</p>
+                                    <p class="text-sm text-gray-600">Przemysłowy</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-medium text-gray-900">106 szt.</p>
+                                    <p class="text-xs text-gray-500">Dostępne</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quotes Tab -->
+            <div id="quotesContent" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Zarządzanie Wycenami</h2>
+                    <button onclick="showTab('create-quote')" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                        <i class="fas fa-plus mr-2"></i>Nowa Wycena
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-medium text-gray-900">Lista Wycen</h3>
+                            <div class="flex space-x-2">
+                                <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                    <option>Wszystkie statusy</option>
+                                    <option>Wersja robocza</option>
+                                    <option>Oczekująca</option>
+                                    <option>Zatwierdzona</option>
+                                    <option>Odrzucona</option>
+                                </select>
+                                <div class="relative">
+                                    <input type="text" placeholder="Szukaj wyceny..." class="pl-8 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <i class="fas fa-search absolute left-2.5 top-2.5 text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nr wyceny</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Klient</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data utworzenia</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Okres wynajmu</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wartość netto</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WYC-2024-001</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Budowa Express Sp. z o.o.</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15.01.2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">30 dni</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12,450 zł</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-success text-white rounded-full">Zatwierdzona</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-primary hover:text-blue-700 mr-3">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-400 hover:text-gray-600 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-400 hover:text-red-600">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WYC-2024-002</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mega Konstrukcje</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">16.01.2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">14 dni</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">8,750 zł</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-warning text-white rounded-full">Oczekująca</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-primary hover:text-blue-700 mr-3">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-400 hover:text-gray-600 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-400 hover:text-red-600">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">WYC-2024-003</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Stal-Bud</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">17.01.2024</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">7 dni</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">22,100 zł</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium bg-gray-500 text-white rounded-full">Wersja robocza</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="text-primary hover:text-blue-700 mr-3">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="text-gray-400 hover:text-gray-600 mr-3">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-400 hover:text-red-600">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Quote Tab -->
+            <div id="createQuoteContent" class="tab-content hidden">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-900">Tworzenie Nowej Wyceny</h2>
+                        <p class="text-gray-600 mt-2">Wypełnij poniższe informacje, aby utworzyć nową wycenę dla klienta</p>
+                    </div>
+
+                    <!-- Client Information -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Informacje o kliencie</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nazwa firmy</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Wprowadź nazwę firmy">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">NIP</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="123-456-78-90">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Osoba kontaktowa</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Imię i nazwisko">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
+                                <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="+48 123 456 789">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="email@firma.pl">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Adres</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Ulica, miasto, kod pocztowy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quote Items -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">Pozycje wyceny</h3>
+                            <button onclick="addQuoteItem()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                                <i class="fas fa-plus mr-2"></i>Dodaj pozycję
+                            </button>
+                        </div>
+
+                        <div id="quoteItemsContainer">
+                            <!-- Sample Quote Item -->
+                            <div class="border border-gray-200 rounded-lg p-4 mb-4 quote-item">
+                                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kategoria</label>
+                                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" onchange="updateEquipmentOptions(this)">
+                                            <option value="">Wybierz kategorię</option>
+                                            <option value="klimatyzacje">Klimatyzacje</option>
+                                            <option value="nagrzewnice">Nagrzewnice</option>
+                                            <option value="maszty">Maszty</option>
+                                            <option value="agregaty">Agregaty</option>
+                                            <option value="kurtyny">Kurtyny powietrzne</option>
+                                            <option value="wyciagi">Wyciągi spalin</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Sprzęt</label>
+                                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent equipment-select">
+                                            <option value="">Najpierw wybierz kategorię</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Ilość</label>
+                                        <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="1" min="1" onchange="calculateItemPrice(this)">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Okres wynajmu</label>
+                                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" onchange="calculateItemPrice(this)">
+                                            <option value="1-2">1-2 dni</option>
+                                            <option value="3-7">3-7 dni</option>
+                                            <option value="8-18">8-18 dni</option>
+                                            <option value="19-29">19-29 dni</option>
+                                            <option value="30+">30+ dni</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Cena netto</label>
+                                        <div class="flex items-center">
+                                            <span class="text-lg font-medium text-gray-900 price-display">0 zł</span>
+                                            <button onclick="removeQuoteItem(this)" class="ml-2 text-red-400 hover:text-red-600">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Uwagi</label>
+                                    <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" rows="2" placeholder="Dodatkowe uwagi do pozycji"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-medium text-gray-900">Wartość netto:</span>
+                                <span class="text-xl font-bold text-primary" id="totalPrice">0 zł</span>
+                            </div>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="text-sm text-gray-600">VAT (23%):</span>
+                                <span class="text-sm text-gray-600" id="vatAmount">0 zł</span>
+                            </div>
+                            <div class="flex justify-between items-center mt-2 pt-2 border-t border-gray-200">
+                                <span class="text-lg font-bold text-gray-900">Wartość brutto:</span>
+                                <span class="text-xl font-bold text-gray-900" id="totalGross">0 zł</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex justify-end space-x-4">
+                        <button class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition duration-200">
+                            Anuluj
+                        </button>
+                        <button class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition duration-200">
+                            Zapisz jako wersję roboczą
+                        </button>
+                        <button class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition duration-200">
+                            Wygeneruj PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Tab -->
+            <div id="adminContent" class="tab-content hidden">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Panel Administratora</h2>
+                    <p class="text-gray-600 mt-2">Zarządzaj sprzętem, cenami i ustawieniami systemu</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Equipment Management -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">Zarządzanie sprzętem</h3>
+                                <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                                    <i class="fas fa-plus mr-2"></i>Dodaj sprzęt
+                                </button>
+                            </div>
+                            
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nazwa</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategoria</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ilość</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cena base</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Akcje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Carrier 50FC-093</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">Klimatyzacje</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">330</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">350 zł</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button class="text-primary hover:text-blue-700 mr-3">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-400 hover:text-red-600">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Master BV691S</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">Nagrzewnice</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">189</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">300 zł</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button class="text-primary hover:text-blue-700 mr-3">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-400 hover:text-red-600">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Atlas Copco H5+</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">Maszty</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">177</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">350 zł</td>
+                                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <button class="text-primary hover:text-blue-700 mr-3">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="text-red-400 hover:text-red-600">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings -->
+                    <div>
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Ustawienia cenowe</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Stawka VAT (%)</label>
+                                    <input type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" value="23">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Domyślna waluta</label>
+                                    <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                        <option value="PLN">PLN</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                </div>
+                                <button class="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                                    Zapisz ustawienia
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Użytkownicy</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-900">Jan Kowalski</p>
+                                        <p class="text-sm text-gray-600">Administrator</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="text-primary hover:text-blue-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-400 hover:text-red-600">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-900">Anna Nowak</p>
+                                        <p class="text-sm text-gray-600">Pracownik</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="text-primary hover:text-blue-700">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-400 hover:text-red-600">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-secondary text-white py-2 rounded-lg hover:bg-orange-600 transition duration-200">
+                                    <i class="fas fa-plus mr-2"></i>Dodaj użytkownika
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Equipment pricing data based on the catalog
+        const equipmentPricing = {
+            'klimatyzacje': {
+                'Carrier 50FC-093': {
+                    '1-2': 350,
+                    '3-7': 300,
+                    '8-18': 250,
+                    '19-29': 200,
+                    '30+': 150
+                },
+                'Lennox BAH 085': {
+                    '1-2': 350,
+                    '3-7': 300,
+                    '8-18': 250,
+                    '19-29': 200,
+                    '30+': 150
+                },
+                'Lennox CAMH': {
+                    '1-2': 350,
+                    '3-7': 300,
+                    '8-18': 250,
+                    '19-29': 200,
+                    '30+': 150
+                }
+            },
+            'nagrzewnice': {
+                'Master BV691S': {
+                    '1-2': 300,
+                    '3-7': 255,
+                    '8-18': 210,
+                    '19-29': 165,
+                    '30+': 120
+                },
+                'Jumbo 235': {
+                    '1-2': 300,
+                    '3-7': 255,
+                    '8-18': 210,
+                    '19-29': 165,
+                    '30+': 120
+                },
+                'Thermobile IMA 200': {
+                    '1-2': 300,
+                    '3-7': 255,
+                    '8-18': 210,
+                    '19-29': 165,
+                    '30+': 120
+                }
+            },
+            'maszty': {
+                'Atlas Copco H5+': {
+                    '1-2': 350,
+                    '3-7': 300,
+                    '8-18': 250,
+                    '19-29': 200,
+                    '30+': 150
+                },
+                'Atlas Copco H6+': {
+                    '1-2': 350,
+                    '3-7': 300,
+                    '8-18': 250,
+                    '19-29': 200,
+                    '30+': 150
+                },
+                'Generac V20': {
+                    '1-2': 350,
+                    '3-7': 300,
+                    '8-18': 250,
+                    '19-29': 200,
+                    '30+': 150
+                }
+            },
+            'agregaty': {
+                'SDMO (do 75kVA)': {
+                    '1-2': 380,
+                    '3-7': 325,
+                    '8-18': 270,
+                    '19-29': 215,
+                    '30+': 160
+                },
+                'INMESOL (100-200kVA)': {
+                    '1-2': 860,
+                    '3-7': 735,
+                    '8-18': 610,
+                    '19-29': 485,
+                    '30+': 360
+                },
+                'GRUPEL (200-300kVA)': {
+                    '1-2': 1200,
+                    '3-7': 1025,
+                    '8-18': 850,
+                    '19-29': 675,
+                    '30+': 500
+                }
+            }
+        };
+
+        const equipmentOptions = {
+            'klimatyzacje': ['Carrier 50FC-093', 'Lennox BAH 085', 'Lennox CAMH'],
+            'nagrzewnice': ['Master BV691S', 'Jumbo 235', 'Thermobile IMA 200'],
+            'maszty': ['Atlas Copco H5+', 'Atlas Copco H6+', 'Generac V20'],
+            'agregaty': ['SDMO (do 75kVA)', 'INMESOL (100-200kVA)', 'GRUPEL (200-300kVA)'],
+            'kurtyny': ['Guard 150E'],
+            'wyciagi': ['Norfi SG-4996-200B']
+        };
+
+        // Login functionality
+        function showDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.remove('hidden');
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active', 'border-primary', 'text-primary');
+                button.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Content').classList.remove('hidden');
+            
+            // Add active class to selected tab
+            const activeTab = document.getElementById(tabName + 'Tab');
+            activeTab.classList.add('active', 'border-primary', 'text-primary');
+            activeTab.classList.remove('border-transparent', 'text-gray-500');
+        }
+
+        // Equipment options update
+        function updateEquipmentOptions(categorySelect) {
+            const category = categorySelect.value;
+            const equipmentSelect = categorySelect.closest('.quote-item').querySelector('.equipment-select');
+            
+            // Clear existing options
+            equipmentSelect.innerHTML = '<option value="">Wybierz sprzęt</option>';
+            
+            if (category && equipmentOptions[category]) {
+                equipmentOptions[category].forEach(equipment => {
+                    const option = document.createElement('option');
+                    option.value = equipment;
+                    option.textContent = equipment;
+                    equipmentSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Price calculation
+        function calculateItemPrice(element) {
+            const quoteItem = element.closest('.quote-item');
+            const categorySelect = quoteItem.querySelector('select');
+            const equipmentSelect = quoteItem.querySelector('.equipment-select');
+            const quantityInput = quoteItem.querySelector('input[type="number"]');
+            const periodSelect = quoteItem.querySelector('select:last-of-type');
+            const priceDisplay = quoteItem.querySelector('.price-display');
+            
+            const category = categorySelect.value;
+            const equipment = equipmentSelect.value;
+            const quantity = parseInt(quantityInput.value) || 0;
+            const period = periodSelect.value;
+            
+            let price = 0;
+            if (category && equipment && quantity > 0 && period) {
+                if (equipmentPricing[category] && equipmentPricing[category][equipment]) {
+                    const unitPrice = equipmentPricing[category][equipment][period];
+                    price = unitPrice * quantity;
+                }
+            }
+            
+            priceDisplay.textContent = price.toLocaleString('pl-PL') + ' zł';
+            
+            // Update total
+            updateTotalPrice();
+        }
+
+        // Update total price
+        function updateTotalPrice() {
+            let total = 0;
+            document.querySelectorAll('.quote-item').forEach(item => {
+                const priceText = item.querySelector('.price-display').textContent;
+                const price = parseInt(priceText.replace(/[^\d]/g, '')) || 0;
+                total += price;
+            });
+            
+            const vatAmount = total * 0.23;
+            const totalGross = total + vatAmount;
+            
+            document.getElementById('totalPrice').textContent = total.toLocaleString('pl-PL') + ' zł';
+            document.getElementById('vatAmount').textContent = vatAmount.toLocaleString('pl-PL') + ' zł';
+            document.getElementById('totalGross').textContent = totalGross.toLocaleString('pl-PL') + ' zł';
+        }
+
+        // Add new quote item
+        function addQuoteItem() {
+            const container = document.getElementById('quoteItemsContainer');
+            const template = container.querySelector('.quote-item').cloneNode(true);
+            
+            // Reset form values
+            template.querySelectorAll('input, select, textarea').forEach(input => {
+                input.value = '';
+            });
+            template.querySelector('.price-display').textContent = '0 zł';
+            template.querySelector('.equipment-select').innerHTML = '<option value="">Najpierw wybierz kategorię</option>';
+            
+            container.appendChild(template);
+        }
+
+        // Remove quote item
+        function removeQuoteItem(button) {
+            const quoteItem = button.closest('.quote-item');
+            const container = document.getElementById('quoteItemsContainer');
+            
+            // Don't remove if it's the only item
+            if (container.children.length > 1) {
+                quoteItem.remove();
+                updateTotalPrice();
+            }
+        }
+
+        // TODO: Implement business logic for:
+        // - User authentication and authorization
+        // - Equipment inventory management
+        // - Quote persistence and retrieval
+        // - PDF generation
+        // - Email notifications
+        // - Database operations
+        // - File upload/download
+        // - Real-time updates
+        // - Advanced search and filtering
+        // - Reporting and analytics
+    </script>
+</body>
+</html>

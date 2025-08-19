@@ -1,0 +1,1625 @@
+{
+  "id": "ce0263ca-9cc7-4119-b851-f95499464fe8",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.clients": {
+      "name": "clients",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "company_name": {
+          "name": "company_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nip": {
+          "name": "nip",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contact_person": {
+          "name": "contact_person",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.equipment": {
+      "name": "equipment",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "model": {
+          "name": "model",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "power": {
+          "name": "power",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fuel_consumption_75": {
+          "name": "fuel_consumption_75",
+          "type": "numeric(6, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dimensions": {
+          "name": "dimensions",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "weight": {
+          "name": "weight",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "engine": {
+          "name": "engine",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "alternator": {
+          "name": "alternator",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fuel_tank_capacity": {
+          "name": "fuel_tank_capacity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "available_quantity": {
+          "name": "available_quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "equipment_category_id_equipment_categories_id_fk": {
+          "name": "equipment_category_id_equipment_categories_id_fk",
+          "tableFrom": "equipment",
+          "tableTo": "equipment_categories",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.equipment_additional": {
+      "name": "equipment_additional",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "equipment_id": {
+          "name": "equipment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "equipment_additional_equipment_id_equipment_id_fk": {
+          "name": "equipment_additional_equipment_id_equipment_id_fk",
+          "tableFrom": "equipment_additional",
+          "tableTo": "equipment",
+          "columnsFrom": [
+            "equipment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.equipment_categories": {
+      "name": "equipment_categories",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "equipment_categories_name_unique": {
+          "name": "equipment_categories_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.equipment_pricing": {
+      "name": "equipment_pricing",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "equipment_id": {
+          "name": "equipment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period_start": {
+          "name": "period_start",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "period_end": {
+          "name": "period_end",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price_per_day": {
+          "name": "price_per_day",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_percent": {
+          "name": "discount_percent",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "equipment_pricing_equipment_id_equipment_id_fk": {
+          "name": "equipment_pricing_equipment_id_equipment_id_fk",
+          "tableFrom": "equipment_pricing",
+          "tableTo": "equipment",
+          "columnsFrom": [
+            "equipment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.equipment_service_costs": {
+      "name": "equipment_service_costs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "equipment_id": {
+          "name": "equipment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "service_interval_months": {
+          "name": "service_interval_months",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 12
+        },
+        "service_interval_km": {
+          "name": "service_interval_km",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "service_interval_motohours": {
+          "name": "service_interval_motohours",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "worker_hours": {
+          "name": "worker_hours",
+          "type": "numeric(4, 1)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'2.0'"
+        },
+        "worker_cost_per_hour": {
+          "name": "worker_cost_per_hour",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'100.00'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "equipment_service_costs_equipment_id_equipment_id_fk": {
+          "name": "equipment_service_costs_equipment_id_equipment_id_fk",
+          "tableFrom": "equipment_service_costs",
+          "tableTo": "equipment",
+          "columnsFrom": [
+            "equipment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "equipment_service_costs_equipment_id_unique": {
+          "name": "equipment_service_costs_equipment_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "equipment_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.equipment_service_items": {
+      "name": "equipment_service_items",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "equipment_id": {
+          "name": "equipment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "item_name": {
+          "name": "item_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "item_cost": {
+          "name": "item_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0.00'"
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "equipment_service_items_equipment_id_equipment_id_fk": {
+          "name": "equipment_service_items_equipment_id_equipment_id_fk",
+          "tableFrom": "equipment_service_items",
+          "tableTo": "equipment",
+          "columnsFrom": [
+            "equipment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.needs_assessment_questions": {
+      "name": "needs_assessment_questions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "question": {
+          "name": "question",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'text'"
+        },
+        "options": {
+          "name": "options",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_required": {
+          "name": "is_required",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.needs_assessment_responses": {
+      "name": "needs_assessment_responses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "response_number": {
+          "name": "response_number",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_company_name": {
+          "name": "client_company_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "client_contact_person": {
+          "name": "client_contact_person",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "client_phone": {
+          "name": "client_phone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "client_email": {
+          "name": "client_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "client_address": {
+          "name": "client_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "responses": {
+          "name": "responses",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "needs_assessment_responses_user_id_users_id_fk": {
+          "name": "needs_assessment_responses_user_id_users_id_fk",
+          "tableFrom": "needs_assessment_responses",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "needs_assessment_responses_response_number_unique": {
+          "name": "needs_assessment_responses_response_number_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "response_number"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pricing_schemas": {
+      "name": "pricing_schemas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "calculation_method": {
+          "name": "calculation_method",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'progressive'"
+        },
+        "is_default": {
+          "name": "is_default",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "pricing_schemas_name_unique": {
+          "name": "pricing_schemas_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.quote_items": {
+      "name": "quote_items",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "quote_id": {
+          "name": "quote_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "equipment_id": {
+          "name": "equipment_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rental_period_days": {
+          "name": "rental_period_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price_per_day": {
+          "name": "price_per_day",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_percent": {
+          "name": "discount_percent",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "total_price": {
+          "name": "total_price",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fuel_consumption_lh": {
+          "name": "fuel_consumption_lh",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fuel_price_per_liter": {
+          "name": "fuel_price_per_liter",
+          "type": "numeric(6, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hours_per_day": {
+          "name": "hours_per_day",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 8
+        },
+        "total_fuel_cost": {
+          "name": "total_fuel_cost",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0'"
+        },
+        "include_fuel_cost": {
+          "name": "include_fuel_cost",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "fuel_consumption_per_100km": {
+          "name": "fuel_consumption_per_100km",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "kilometers_per_day": {
+          "name": "kilometers_per_day",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "include_maintenance_cost": {
+          "name": "include_maintenance_cost",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "maintenance_interval_hours": {
+          "name": "maintenance_interval_hours",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 500
+        },
+        "maintenance_interval_km": {
+          "name": "maintenance_interval_km",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "calculation_type": {
+          "name": "calculation_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'motohours'"
+        },
+        "fuel_filter_1_cost": {
+          "name": "fuel_filter_1_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'49.00'"
+        },
+        "fuel_filter_2_cost": {
+          "name": "fuel_filter_2_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'118.00'"
+        },
+        "oil_filter_cost": {
+          "name": "oil_filter_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'45.00'"
+        },
+        "air_filter_1_cost": {
+          "name": "air_filter_1_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'105.00'"
+        },
+        "air_filter_2_cost": {
+          "name": "air_filter_2_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'54.00'"
+        },
+        "engine_filter_cost": {
+          "name": "engine_filter_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'150.00'"
+        },
+        "oil_cost": {
+          "name": "oil_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'162.44'"
+        },
+        "oil_quantity_liters": {
+          "name": "oil_quantity_liters",
+          "type": "numeric(5, 1)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'14.7'"
+        },
+        "service_work_hours": {
+          "name": "service_work_hours",
+          "type": "numeric(4, 1)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'2'"
+        },
+        "service_work_rate_per_hour": {
+          "name": "service_work_rate_per_hour",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'100.00'"
+        },
+        "service_travel_distance_km": {
+          "name": "service_travel_distance_km",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'31'"
+        },
+        "service_travel_rate_per_km": {
+          "name": "service_travel_rate_per_km",
+          "type": "numeric(6, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1.15'"
+        },
+        "total_maintenance_cost": {
+          "name": "total_maintenance_cost",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0'"
+        },
+        "expected_maintenance_hours": {
+          "name": "expected_maintenance_hours",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "include_installation_cost": {
+          "name": "include_installation_cost",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "installation_distance_km": {
+          "name": "installation_distance_km",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "number_of_technicians": {
+          "name": "number_of_technicians",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1
+        },
+        "service_rate_per_technician": {
+          "name": "service_rate_per_technician",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'150'"
+        },
+        "travel_rate_per_km": {
+          "name": "travel_rate_per_km",
+          "type": "numeric(6, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1.15'"
+        },
+        "total_installation_cost": {
+          "name": "total_installation_cost",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0'"
+        },
+        "include_disassembly_cost": {
+          "name": "include_disassembly_cost",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "disassembly_distance_km": {
+          "name": "disassembly_distance_km",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disassembly_number_of_technicians": {
+          "name": "disassembly_number_of_technicians",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1
+        },
+        "disassembly_service_rate_per_technician": {
+          "name": "disassembly_service_rate_per_technician",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'150'"
+        },
+        "disassembly_travel_rate_per_km": {
+          "name": "disassembly_travel_rate_per_km",
+          "type": "numeric(6, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1.15'"
+        },
+        "total_disassembly_cost": {
+          "name": "total_disassembly_cost",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0'"
+        },
+        "include_travel_service_cost": {
+          "name": "include_travel_service_cost",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "travel_service_distance_km": {
+          "name": "travel_service_distance_km",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "travel_service_number_of_technicians": {
+          "name": "travel_service_number_of_technicians",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1
+        },
+        "travel_service_service_rate_per_technician": {
+          "name": "travel_service_service_rate_per_technician",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'150'"
+        },
+        "travel_service_travel_rate_per_km": {
+          "name": "travel_service_travel_rate_per_km",
+          "type": "numeric(6, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'1.15'"
+        },
+        "travel_service_number_of_trips": {
+          "name": "travel_service_number_of_trips",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1
+        },
+        "total_travel_service_cost": {
+          "name": "total_travel_service_cost",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0'"
+        },
+        "include_travel_cost": {
+          "name": "include_travel_cost",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "travel_distance_km": {
+          "name": "travel_distance_km",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hourly_rate_per_technician": {
+          "name": "hourly_rate_per_technician",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'150'"
+        },
+        "total_travel_cost": {
+          "name": "total_travel_cost",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0'"
+        },
+        "include_service_items": {
+          "name": "include_service_items",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "service_item_1_cost": {
+          "name": "service_item_1_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "service_item_2_cost": {
+          "name": "service_item_2_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "service_item_3_cost": {
+          "name": "service_item_3_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "service_item_4_cost": {
+          "name": "service_item_4_cost",
+          "type": "numeric(8, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "total_service_items_cost": {
+          "name": "total_service_items_cost",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "additional_cost": {
+          "name": "additional_cost",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "accessories_cost": {
+          "name": "accessories_cost",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'0.00'"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "quote_items_quote_id_quotes_id_fk": {
+          "name": "quote_items_quote_id_quotes_id_fk",
+          "tableFrom": "quote_items",
+          "tableTo": "quotes",
+          "columnsFrom": [
+            "quote_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "quote_items_equipment_id_equipment_id_fk": {
+          "name": "quote_items_equipment_id_equipment_id_fk",
+          "tableFrom": "quote_items",
+          "tableTo": "equipment",
+          "columnsFrom": [
+            "equipment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.quotes": {
+      "name": "quotes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "quote_number": {
+          "name": "quote_number",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "client_id": {
+          "name": "client_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_by_id": {
+          "name": "created_by_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_guest_quote": {
+          "name": "is_guest_quote",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "guest_email": {
+          "name": "guest_email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pricing_schema_id": {
+          "name": "pricing_schema_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'draft'"
+        },
+        "total_net": {
+          "name": "total_net",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vat_rate": {
+          "name": "vat_rate",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'23'"
+        },
+        "total_gross": {
+          "name": "total_gross",
+          "type": "numeric(12, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "quotes_client_id_clients_id_fk": {
+          "name": "quotes_client_id_clients_id_fk",
+          "tableFrom": "quotes",
+          "tableTo": "clients",
+          "columnsFrom": [
+            "client_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "quotes_created_by_id_users_id_fk": {
+          "name": "quotes_created_by_id_users_id_fk",
+          "tableFrom": "quotes",
+          "tableTo": "users",
+          "columnsFrom": [
+            "created_by_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "quotes_pricing_schema_id_pricing_schemas_id_fk": {
+          "name": "quotes_pricing_schema_id_pricing_schemas_id_fk",
+          "tableFrom": "quotes",
+          "tableTo": "pricing_schemas",
+          "columnsFrom": [
+            "pricing_schema_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "quotes_quote_number_unique": {
+          "name": "quotes_quote_number_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "quote_number"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sessions": {
+      "name": "sessions",
+      "schema": "",
+      "columns": {
+        "sid": {
+          "name": "sid",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "sess": {
+          "name": "sess",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expire": {
+          "name": "expire",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "IDX_session_expire": {
+          "name": "IDX_session_expire",
+          "columns": [
+            {
+              "expression": "expire",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "profile_image_url": {
+          "name": "profile_image_url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'employee'"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "is_approved": {
+          "name": "is_approved",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "approved_at": {
+          "name": "approved_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "approved_by_id": {
+          "name": "approved_by_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
